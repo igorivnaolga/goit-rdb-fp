@@ -40,3 +40,19 @@ WHERE number_rabies IS NOT NULL
 GROUP BY id
 ORDER BY avg_value DESC
 LIMIT 10;
+
+4. 
+ALTER TABLE infectious_cases_normalized ADD COLUMN formated_date DATE;
+
+ALTER TABLE infectious_cases_normalized ADD COLUMN cur_date DATE;
+
+ALTER TABLE infectious_cases_normalized ADD COLUMN difference_date INT;
+
+UPDATE infectious_cases_normalized
+SET formated_date = STR_TO_DATE(CONCAT(year, '-01-01'), '%Y-%m-%d');
+
+UPDATE infectious_cases_normalized
+SET cur_date = CURDATE();
+
+UPDATE infectious_cases_normalized
+SET difference_date = YEAR(cur_date) - YEAR(formated_date);
