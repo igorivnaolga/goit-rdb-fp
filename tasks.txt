@@ -56,3 +56,24 @@ SET cur_date = CURDATE();
 
 UPDATE infectious_cases_normalized
 SET difference_date = YEAR(cur_date) - YEAR(formated_date);
+
+5.
+DELIMITER //
+
+CREATE FUNCTION getDateDifference(year INT)
+RETURNS INT 
+DETERMINISTIC
+
+BEGIN
+	DECLARE formated_date DATE;
+    DECLARE cur_date DATE;
+    DECLARE difference_date INT;
+    
+    SET formated_date = STR_TO_DATE(CONCAT(year, '-01-01'), '%Y-%m-%d');
+    SET cur_date = CURDATE();
+    SET difference_date = YEAR(cur_date) - YEAR(formated_date);
+    
+    RETURN difference_date;
+END //
+
+DELIMITER ;
