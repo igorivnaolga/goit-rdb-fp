@@ -22,7 +22,7 @@ ADD country_id INT AFTER id,
 ADD CONSTRAINT fk_country_id FOREIGN KEY (country_id) REFERENCES countries(id);
 
 UPDATE infectious_cases_normalized i, countries c  
-SET i.country_id = c.id WHERE c.code = i.code;
+SET i.country_id = c.id WHERE c.code = i.code AND c.country = i.entity;
 
 ALTER TABLE infectious_cases_normalized
 DROP COLUMN entity,
